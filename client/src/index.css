@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.register {
+  max-width: 680px;
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0,0,0,0.3);
+}
+.login {
+  max-width: 680px;
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0,0,0,0.3);
+}
+.register input {
+  margin: 10px auto;
+  padding: 5px;
+}
+.login input {
+  margin: 10px auto;
+  padding: 5px;
+}
