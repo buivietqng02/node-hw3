@@ -20,6 +20,8 @@ exports.addUserTruck=async function(req,res,next) {
 //req.body.type
 const userId=req.credential.userId//userId of authenticated user  
 const role= req.credential.role 
+console.log(role)
+console.log(req.body)
 if (role!=="DRIVER") return res.status(400).json({
     message: "user is not driver"});
 try {
@@ -135,8 +137,8 @@ exports.assignUserTruckById=async function(req, res,next) {
         truck.assigned_to= userId;
         await truck.save();
         }
-        res.status(200).json({
-            message:"truck assigned successfully"
+        return res.status(200).json({
+            message: "truck assigned successfully"
         })
     }
     catch (err) {

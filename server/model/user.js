@@ -8,7 +8,8 @@ const UserSchema= new mongoose.Schema({
     password: {type: String,required: true},
     change_profile_or_trucks: {type: Boolean, default: true},
     load: {type: mongoose.Schema.Types.ObjectId, ref: 'Load'},
-    created_date: String
+    created_date: String,
+    avatar: String
 
 })
 UserSchema.methods.encryptPassword=function(password) {

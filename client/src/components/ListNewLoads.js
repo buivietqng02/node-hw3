@@ -11,15 +11,12 @@ th, td {
 tr:nth-child(even) {
     background-color: lightgrey
 }
+tr:nth-child(odd) {
+    background-color: rgba(0,0,0,.3);
+}
 
 `
-const Table= ()=> {
-    return (
-        <div>
 
-        </div>
-    )
-}
 const ListNewLoads=()=> {
    const [loading, setIsLoading]= useState(true);
    const [data, setData]= useState([]);
@@ -42,7 +39,40 @@ const ListNewLoads=()=> {
     })
 
        
-   },[])
+   },[loading])
+   const handlePost= (id)=> {
+    fetch(`/api/loads/${id}/post`, {
+        method: 'POST',
+        headers: {
+         'authorization': 'Bearer '+ 
+         localStorage.getItem('jwt_token')
+     }
+
+    })
+    .then(response=> response.json())
+    .then(json=>{
+        //setIsLoading(true)
+         alert(json.message);
+     })
+    .catch(err=> alert(err.toString()))
+   }
+   const handleDelete= (id)=> {
+       console.log(id)
+       fetch(`/api/loads/${id}`, {
+           method: 'DELETE',
+           headers: {
+            'authorization': 'Bearer '+ 
+            localStorage.getItem('jwt_token')
+        }
+
+       })
+       .then(response=> response.json())
+       .then(json=>{
+           setIsLoading(true)
+            alert(json.message);
+        })
+       .catch(err=> alert(err.toString()))
+}
     return (
         <NewLoadsStyled>
            {loading ? <FaSpinner/>:
@@ -62,8 +92,8 @@ const ListNewLoads=()=> {
                </thead>
                <tbody>
                   
-                {data.loads.map((load, index)=> 
-                    <tr key= {index}>
+                {data.loads.map((load)=> 
+                    <tr key= {load._id}>
                         <td>{load.name}</td>
                         <td>{load.created_date}</td>
                         <td>{load.pickup_address}</td>
@@ -72,6 +102,17 @@ const ListNewLoads=()=> {
                         <td>{load.dimensions.width}</td>
                         <td>{load.dimensions.length}</td>
                         <td>{load.dimensions.height}</td>
+                        
+                        <td><button
+                        onClick={()=>handlePost(load._id) }
+                        >
+                            POST
+                        </button></td>
+                        <td><button
+                        onClick={()=>handleDelete(load._id) }
+                        >
+                            DELETE
+                        </button></td>
                     </tr>
                 )}
                </tbody>

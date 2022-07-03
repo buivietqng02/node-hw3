@@ -131,39 +131,45 @@ if (role!="DRIVER") return res.status(400).json({
     message: "you are not DRIVER"
 })
 try {
-   const load= await Load.findOne({assigned_to: userId});
+   const load= await Load.findOne({assigned_to: userId,
+status: 'ASSIGNED'});
+   console.log(load)
     if (!load) return res.status(400).json({
         messsage: "you are not assigned to any load yet"
     })
 
   const states= ["En route to Pick up", "Arrived to Pick up",
 "En route to delivery", "Arrived to delivery"];
-if (load.state==states[3]) return res.status(400).json({
-    message: "this load has already been SHIPPED"
-})
-for (let i=0; i< states.length-2; i++)
-{
-    if (load.state==states[i]) {
+console.log(load.state)
+for (let i=0; i<= states.length-2; i++)
+{    if (load.state==states[i]) {
         load.state= states[i+1]
-        break;
+       
+       break;
     }
+   
 }
+console.log(load.state)
 if (load.state==undefined) {
     load.state= states[0];
 }
+console.log(load.state)
+console.log(load.state==states[3])
 if (load.state==states[3]) {
 load.status= "SHIPPED";
 const user = await User.findById({_id: load.assigned_to})
 user.change_profile_or_trucks= true;
-const truck= Truck.findOne({assigned_to: user._id})
+const truck= await Truck.findOne({assigned_to: user._id})
 truck.status= "IS";
 await user.save();
 await truck.save();
+await load.save();
 }
 load.logs.push({
     message: `Changed state to ${load.state}`,
     time: (new Date()).toString()
 })
+console.log(load.status);
 await load.save();
 
 res.status(200).json({
@@ -219,7 +225,7 @@ exports.deleteUserLoadById= async function(req, res) {
         message: "you need to be SHIPPER to delete load"
     })
     try {
-        const load= await Load.findById({_id: id})
+        const load= await Load.findById({_id: req.params.id})
         if (!load) return res.status(400).json({
             message: "cannot found load with this id"})
         if (load.status!="NEW") return res.status(400).json({
@@ -265,8 +271,8 @@ if (role!="SHIPPER") res.status(400).json({
     })
     if (trucks.length < 1) {
         //roll back to NEW status
-       // load.status= "NEW";
-        //await load.save();
+        load.status= "NEW";
+        await load.save();
         return res.status(200).json({
             message: "load posted but no truck found",
             driver_found: false
@@ -281,6 +287,10 @@ if (role!="SHIPPER") res.status(400).json({
     load.state= "En route to Pick up";
     load.logs.push({
         message: "Load assigned to driver ",
+        time: (new Date()).toString()
+    });
+    load.logs.push({
+        message: `Load changed state to ${load.state} `,
         time: (new Date()).toString()
     })
     const driver= await User.findById({_id: truck.assigned_to})

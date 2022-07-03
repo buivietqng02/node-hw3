@@ -27,7 +27,7 @@ export default function Signin() {
         alert(json.message)
         if (response.status===200) {
        
-        console.log(json);
+        
         setIsAuthenticated(true);
         localStorage.clear();
         localStorage.setItem('jwt_token',json.jwt_token )

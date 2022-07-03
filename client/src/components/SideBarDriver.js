@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react'
 import {FaUpload,FaTruckLoading} from 'react-icons/fa'
 import styled from 'styled-components'
-
+import { SelectCom1 } from './Driver'
 const SideBarDriverStyled= styled.div`
 display: flex;
 flex-direction: column;
@@ -11,7 +11,7 @@ button {
     padding: 10px 5px;
     text-transform: uppercase;
 }
-button:hover {
+button:hover {  
     background: lightgrey;
 }
 span {
@@ -19,19 +19,23 @@ span {
 }
 `
 const SideBarDriver=()=> {
-    
+    const {setElem}= useContext(SelectCom1)
     return (
         <SideBarDriverStyled>
             <button
-            onClick={()=> setElem('CreateNewLoad')}
+            onClick={()=> setElem('CreateNewTruck')}
             >
                 <span><FaUpload/></span>create new truck</button>
             <button
-            onClick={()=>setElem('ListNewLoads')}
-            >List new loads</button>
-            <button>posted loads</button>
-            <button><span><FaTruckLoading/></span>assigned loads</button>
-            <button>history</button>
+            onClick={()=>setElem('ListTrucks')}
+            >List trucks</button>
+            
+            <button
+            onClick={()=>setElem('ListAssignedLoads')}
+            ><span><FaTruckLoading/></span>assigned loads</button>
+            <button
+            onClick={()=> setElem('History')}
+            >history</button>
             <button onClick={()=> setElem('Profile')}>Profile</button>
         </SideBarDriverStyled>
     )

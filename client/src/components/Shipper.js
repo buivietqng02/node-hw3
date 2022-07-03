@@ -4,6 +4,8 @@ import SideBar from './SideBar'
 import CreateNewLoad from './CreateNewLoad'
 import ListNewLoads from './ListNewLoads'
 import Profile from './Profile'
+import History from './History'
+import ListAssignedLoads from './ListAssignedLoads'
 import styled from 'styled-components'
 const FlexDiv= styled.div`
 
@@ -21,7 +23,9 @@ const Shipper= ()=> {
    <FlexDiv>
       <SideBar/>
       {elem==='CreateNewLoad' ? <CreateNewLoad/>:
+      elem==='ListAssignedLoads' ? <ListAssignedLoads/> :
       elem==='Profile' ? <Profile/> :
+      elem==='History' ? <History/> :
       <ListNewLoads/>
 
       }

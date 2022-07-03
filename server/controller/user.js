@@ -15,6 +15,7 @@ try {
    userData.role= user.role;
    userData.email= user.email;
    userData.created_date= user.created_date;
+   userData.avatar= user.avatar;
    res.status(200).json({"user": userData})
 }
 catch (err) {
@@ -104,4 +105,27 @@ exports.forgotPassword=function(req, res,next) {
     if (!email) return res.status(400).json({
         message: "You need to provide the email"})
 
+}
+const upload= require('./multer')
+exports.uploadAvatar= async function(req, res) {
+   console.log(req.files)
+    if (!req.files) {
+        return res.status(400).json({message: "no image found"})
+    }
+    const uploadedFile= req.files.image;
+    console.log(req.files.image);
+    console.log('upload avatar')
+    
+    try {
+        const user= await User.findById({_id: req.credential.userId});
+        console.log(user);
+        user.avatar= 'data:'+ uploadedFile.mimetype+
+        ';base64,'+ uploadedFile.data.toString('base64');
+        await user.save();
+        res.status(200).json({message: 'OK'})
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({message: "error"})
+    }
 }
