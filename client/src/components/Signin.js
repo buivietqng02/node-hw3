@@ -42,7 +42,7 @@ export default function Signin() {
     return (
         <div className= "login">
             <form>
-            <h1>Your logo</h1>
+            <h1>Sign in</h1>
             <label>Email</label>
             <input type= "text" 
             name= "email"
@@ -60,7 +60,7 @@ export default function Signin() {
             onClick={onSubmitHandle}
             value= "Log in" />
             </form>
-            <button>Forgot  password</button>
+           
             <p>Dont have a account</p>
             <Link to='/register'><button>Register</button></Link>
         </div>

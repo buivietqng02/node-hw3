@@ -1,40 +1,51 @@
 import React, {useContext, useState} from 'react'
 import {FaUpload,FaTruckLoading,FaHistory} from 'react-icons/fa'
 import {ImProfile} from 'react-icons/im'
+import { NavLink, Link } from 'react-router-dom'
+import {BsListStars} from 'react-icons/bs'
 import styled from 'styled-components'
 import { SelectCom } from './Shipper'
 const SideBarStyled= styled.div`
 display: flex;
 flex-direction: column;
 min-width: 200px;
-button {
-    border: none;
-    padding: 10px 5px;
-    text-transform: uppercase;
-}
-button:hover {
-    background: lightgrey;
-}
+
+
 span {
     float: left;
-    font-size: 1.5em
+    font-size: 1.5em;
+    margin-right: 1em;
 }
 `
 const SideBar=()=> {
     const {setElem}= useContext(SelectCom)
+    const styleFn= ({isActive})=> {
+        return {
+            textDecoration: "none",
+            display: "block",
+            margin: "1rem 0",
+            backgroundColor: isActive ? "lightgrey": ''
+        }
+
+        
+    }
     return (
         <SideBarStyled>
-            <button
-            onClick={()=> setElem('CreateNewLoad')}
+            <NavLink style={styleFn}
+            to= "/newload"
             >
-                <span><FaUpload/></span>create new load</button>
-            <button
-            onClick={()=>setElem('ListNewLoads')}
-            >List new loads</button>
+                <span><FaUpload/></span>create new load</NavLink>
+            <NavLink style={styleFn}
+            to='/listnewloads'
+            ><span><BsListStars/></span>List new loads</NavLink>
             
-            <button onClick= {()=> setElem('ListAssignedLoads')}><span><FaTruckLoading/></span>assigned loads</button>
-            <button onClick= {()=> setElem('History')}><span><FaHistory/></span>history</button>
-            <button onClick={()=> setElem('Profile')}><span><ImProfile/></span> Profile</button>
+            <NavLink  style={styleFn}
+            to="/assignedloads"
+            ><span><FaTruckLoading/></span>assigned loads</NavLink>
+            <NavLink style={styleFn}
+            to="/history"><span><FaHistory/></span>history</NavLink>
+            <NavLink style={styleFn}
+            to="/profile"><span><ImProfile/></span> Profile</NavLink>
         </SideBarStyled>
     )
 }

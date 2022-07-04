@@ -2,6 +2,7 @@ const Truck = require('../model/truck');
 const User= require('../model/user');
 const bcrypt= require('bcrypt')
 const jwt= require('jsonwebtoken')
+const validate= require('./validate')
 exports.getProfileInfo=async function(req, res,next) {
 const {userId}= req.credential;
 try {
@@ -64,6 +65,10 @@ exports.changeProfilePassword=function(req, res, next) {
     );
 }
 exports.createProfile=async function(req, res,next) {
+    const {error}= validate.registerVal(req.body);
+    if (error) return res.status(400).json({
+        message: error.details[0].message
+    })
     const {email, password, role}= req.body;
     try {
         const user= await User.findOne({email: email, role: role})

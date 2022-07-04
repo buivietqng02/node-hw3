@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Header from './Header'
 import SideBar from './SideBar'
+import { Outlet } from 'react-router-dom'
 import CreateNewLoad from './CreateNewLoad'
 import ListNewLoads from './ListNewLoads'
 import Profile from './Profile'
@@ -22,13 +23,7 @@ const Shipper= ()=> {
    <Header/>
    <FlexDiv>
       <SideBar/>
-      {elem==='CreateNewLoad' ? <CreateNewLoad/>:
-      elem==='ListAssignedLoads' ? <ListAssignedLoads/> :
-      elem==='Profile' ? <Profile/> :
-      elem==='History' ? <History/> :
-      <ListNewLoads/>
-
-      }
+      <Outlet/>
    </FlexDiv>
     </SelectCom.Provider>
    )

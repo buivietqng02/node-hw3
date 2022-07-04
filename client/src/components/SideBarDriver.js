@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react'
 import {FaUpload,FaTruckLoading} from 'react-icons/fa'
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 import { SelectCom1 } from './Driver'
 const SideBarDriverStyled= styled.div`
 display: flex;
@@ -19,24 +20,35 @@ span {
 }
 `
 const SideBarDriver=()=> {
+    const styleFn= ({isActive})=> {
+        return {
+            textDecoration: "none",
+            display: "block",
+            margin: "1rem 0",
+            backgroundColor: isActive ? "lightgrey": ''
+        }
+
+        
+    }
     const {setElem}= useContext(SelectCom1)
     return (
         <SideBarDriverStyled>
-            <button
-            onClick={()=> setElem('CreateNewTruck')}
+            <NavLink style={styleFn}
+            to="/newtruck"
             >
-                <span><FaUpload/></span>create new truck</button>
-            <button
-            onClick={()=>setElem('ListTrucks')}
-            >List trucks</button>
+                <span><FaUpload/></span>create new truck</NavLink>
+            <NavLink style={styleFn}
+            to="/listtrucks"
+            >List trucks</NavLink>
             
-            <button
-            onClick={()=>setElem('ListAssignedLoads')}
-            ><span><FaTruckLoading/></span>assigned loads</button>
-            <button
-            onClick={()=> setElem('History')}
-            >history</button>
-            <button onClick={()=> setElem('Profile')}>Profile</button>
+            <NavLink style={styleFn}
+            to="/assignedloads"
+            ><span><FaTruckLoading/></span>assigned loads</NavLink>
+            <NavLink style={styleFn}
+            to="/history"
+            >history</NavLink>
+            <NavLink style={styleFn}
+            to="/profile">Profile</NavLink>
         </SideBarDriverStyled>
     )
 }

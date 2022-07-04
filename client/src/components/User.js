@@ -31,7 +31,7 @@ const User=()=> {
             })
           .catch(err=>{
             setRole('');
-            console.log(err.toString()())
+            console.log(err.toString())
           })
         } else {
             navigate('/signin')

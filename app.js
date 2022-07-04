@@ -48,25 +48,27 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+
   res.render('error');
 });
-const mongoURL= process.env.LOCAL_MONGO || process.env.GLOBAL_MONGO
-try {
+const mongoURL= process.env.LOCAL_MONGO
 mongoose.connect(mongoURL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 })
-const db= mongoose.connection;
-db.once('open', ()=> {
-  console.log('connected to db')
+.then(()=> {
+  console.log('connect to local DB')
+  
 })
-db.on('error', ()=> {
-  console.log('error in mongoDb', String(error))
+.catch((err)=> {
+  console.log('error' + err.message);
+ 
+  mongoose.connect(process.env.GLOBAL_MONGO,{
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
 })
-
-}
-catch (err) {
-  console.log('error when connect mongo DB')
-}
+.then(()=>console.log('connect to global mongo') )
+.catch(err=> console.log(err))
 
 module.exports = app;

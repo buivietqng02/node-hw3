@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Header from './Header'
-
+import { Outlet } from 'react-router-dom'
 import CreateNewTruck from './CreateNewTruck'
 import ListTrucks from './ListTrucks'
 import Profile from './Profile'
@@ -23,14 +23,7 @@ const Driver= ()=> {
    <Header/>
    <FlexDiv>
       <SideBarDriver/>
-      {elem==='CreateNewTruck' ? <CreateNewTruck/>:
-      elem==='ListTrucks' ? <ListTrucks/> :
-      elem==='ListAssignedLoads' ? <ListAssignedLoads/> :
-      elem==='Profile' ? <Profile/> :
-      elem=='History' ? <History/> :<></>
-      
-
-      }
+      <Outlet/>
    </FlexDiv>
     </SelectCom1.Provider>
    )

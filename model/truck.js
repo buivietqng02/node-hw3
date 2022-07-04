@@ -32,6 +32,7 @@ const TruckSchema= new mongoose.Schema({
 
 
 })
+TruckSchema.set('toObject', {virtuals: true})
 TruckSchema.virtual("width").get(function(){
     switch (this.type) {
         case "LARGE STRAIGHT": 
@@ -96,5 +97,8 @@ TruckSchema.virtual("weight").get(function(){
 
     }
 })
+
+   
 const Truck= mongoose.model('Truck', TruckSchema)
+
 module.exports= Truck
