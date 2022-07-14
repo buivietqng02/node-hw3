@@ -51,9 +51,9 @@ app.use(function(err, req, res, next) {
 
   res.render('error');
 });
-app.get('/', function(req, res) {
+/* app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-})
+}) */
 const mongoURL= process.env.LOCAL_MONGO
 mongoose.connect(mongoURL, {
   useUnifiedTopology: true,
