@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(fileUpload({
   createParentPath: true
@@ -52,7 +52,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
  app.get('/*', function(req, res) {
-   res.sendFile(path.join(__dirname,'client/build', 'index.html'))
+   res.sendFile(path.join(__dirname,'build', 'index.html'))
  }) 
 const mongoURL= process.env.LOCAL_MONGO
 mongoose.connect(mongoURL, {
